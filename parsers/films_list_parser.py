@@ -1,5 +1,4 @@
 from lxml import html
-import requests
 
 NO_FILMS_PLUG_TEXT = 'Фильмов не найдено. Попробуйте поменять условия в фильтре.'
 NEXT_PAGE_XPATH_SELECTOR = '//div[@class="navigator"]//ul[@class="list"]//a[text()="»"]'
