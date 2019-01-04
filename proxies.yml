@@ -1,0 +1,7 @@
+proxies:
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-es:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-de:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-cn:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-br:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-gb:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'
+  - 'http://lum-customer-hl_96fff6c5-zone-kinopoisk-country-us:omfasnyjzlj3@zproxy.lum-superproxy.io:22225'

@@ -47,15 +47,22 @@ class FilmParser:
                 budget = budget_link[0].text
             else:
                 budget = table_data[0].getnext().xpath('div')[0].text
-        return budget.replace("\xa0", "").replace("\n", "").replace(" ", "")
+        return self.__clear_money_field(budget)
 
     def get_fees(self):
         fees = {}
         table_data = self.__get_table_row_data_or_default('contains(text(), "{0}")'.format(self.FEES_TEXT))
         if table_data:
             for element in table_data:
-                fees[element.text] = element.getnext().xpath('div/a')[0].text.replace("\xa0", "")
+                fees_link = element.getnext().xpath('div/a')
+                if fees_link:
+                    fees[element.text] = self.__clear_money_field(fees_link[0].text)
+                else:
+                    fees[element.text] = self.__clear_money_field(element.getnext().xpath('div')[0].text)
         return fees
+
+    def __clear_money_field(self, text):
+        return text.replace("\xa0", "").replace("\n", "").replace(" ", "")
 
     def get_kinopoisk_rating(self):
         rating_value = '0'
