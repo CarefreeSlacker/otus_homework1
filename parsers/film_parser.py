@@ -1,4 +1,5 @@
 from lxml import html
+import re
 
 class FilmParser:
     COUNTRY_TEXT = 'страна'
@@ -46,7 +47,7 @@ class FilmParser:
                 budget = budget_link[0].text
             else:
                 budget = table_data[0].getnext().xpath('div')[0].text
-        return budget.replace("\xa0", "")
+        return budget.replace("\xa0", "").replace("\n", "").replace(" ", "")
 
     def get_fees(self):
         fees = {}
@@ -57,17 +58,21 @@ class FilmParser:
         return fees
 
     def get_kinopoisk_rating(self):
-        return
+        rating_value = '0'
+        rating = self.__get_rating('//*[@class="rating_ball"]')
+        if rating:
+            rating_value = rating[0].text
+        return rating_value
 
     def get_imdb_rating(self):
-        return
+        rating_value = '0'
+        rating = self.__get_rating('//div[2]')
+        if rating:
+            rating_value = re.search('IMDb:\s*([\d\.]+)', rating[0].text).group(1)
+        return rating_value
 
     def __get_table_row_data_or_default(self, text_selector):
-        result = [] # Default value. If element does not exist returns empty array
-        elements = self.tree.xpath('//*[@id="infoTable"]//table//tr//td[{0}]'.format(text_selector))
+        return self.tree.xpath('//*[@id="infoTable"]//table//tr//td[{0}]'.format(text_selector))
 
-        if elements:
-            result += elements
-        return result
-
-
+    def __get_rating(self, specific_rating_selector):
+        return self.tree.xpath('//*[@class="rating_stars"]//*[@class="block_2"]{0}'.format(specific_rating_selector))
