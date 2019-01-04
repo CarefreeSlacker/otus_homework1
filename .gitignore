@@ -3,4 +3,5 @@
 /scrapped_data.txt
 /scrappers/__pycache__/
 /storages/__pycache__/
+/pages_cache/*
 proxies.yml
