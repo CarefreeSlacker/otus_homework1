@@ -53,7 +53,7 @@ class KinopoiskScrapper(object):
         while parsed_page.has_next_page():
             self.__get_film_urls_from_page(parsed_page)
             next_page_url = self.__make_url_from_path(parsed_page.next_page_path())
-            print('check another page {0}'.format(next_page_url))
+            print('Check next page {0}'.format(next_page_url))
             parsed_page = self.__get_and_parse_page(next_page_url, FilmsListParser)
         else:
             self.__get_film_urls_from_page(parsed_page)
@@ -72,7 +72,6 @@ class KinopoiskScrapper(object):
             try:
                 print('Get and parse page with url: {0} attemption {1}'.format(url, attemption))
                 request = requests.get(url, headers=self.REQUEST_HEADERS, proxies=proxies)
-                print('RequestResult {0}'.format(request))
                 text = request.text
                 break
             except:
@@ -99,7 +98,6 @@ class KinopoiskScrapper(object):
                 film_data = parsed_page.get_film_data()
                 if(film_data):
                     film_data['id'] = re.search('(\d+)', film_url).group(1)
-                    print('Film data present: {0}'.format(film_data))
                     self.films.append(film_data)
                     break
                 else:
