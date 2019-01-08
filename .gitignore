@@ -5,5 +5,6 @@
 /storages/__pycache__/
 /converters/__pycache__/
 /raw_data/__pycache__/
+/processors/__pycache__/
 /pages_cache/*
 proxies.yml
