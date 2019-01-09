@@ -137,6 +137,7 @@ logger = logging.getLogger(__name__)
 SCRAPPED_FILE = 'scrapped_data.txt'
 TABLE_FORMAT_FILE = 'data.csv'
 
+from processors.films_processor import FilmsProcessor
 
 def gather_process():
     logger.info("gather")
@@ -178,6 +179,8 @@ if __name__ == '__main__':
         convert_data_to_table_format()
 
     elif sys.argv[1] == 'stats':
+        p = FilmsProcessor()
+        p.perform()
         stats_of_data()
 
     logger.info("work ended")
