@@ -24,6 +24,7 @@ class KinopoiskScrapper(object):
             parsed_url = parse.urlparse(url)
             self.host_url = '{scheme}://{host}'.format(scheme=parsed_url.scheme, host=parsed_url.netloc)
             self.start_url = url
+            self.collection_name = ''
             self.proxies = self.__load_proxies_configuration()
             self.film_urls = []
             self.films = []
@@ -45,6 +46,7 @@ class KinopoiskScrapper(object):
 
     def __get_film_urls(self):
         parsed_page = self.__get_and_parse_page(self.start_url, FilmsListParser)
+        self.collection_name = parsed_page.collection_name()
 
         if(not parsed_page.has_films_list):
             logger.error('No films on page {0}'.format(self.start_url))

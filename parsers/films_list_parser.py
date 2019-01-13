@@ -7,6 +7,9 @@ class FilmsListParser:
     def __init__(self, page_html):
         self.tree = html.fromstring(page_html)
 
+    def collection_name(self):
+        return self.tree.xpath('//form[@class="bestMoviesNav"]//div[@class="myListFolders add"]/h1/a')[0].text
+
     def has_next_page(self):
         return len(self.tree.xpath(NEXT_PAGE_XPATH_SELECTOR)) > 0
 

@@ -127,42 +127,35 @@ pep8 .
 import logging
 import sys
 
-from scrappers.scrapper import Scrapper
-from storages.file_storage import FileStorage
+# Import for gather command
+from scrappers.kinopoisk_scrapper import KinopoiskScrapper
+from converters.film_to_csv_converter import FilmToCsvConverter
+from storages.intermediate_data_writer import IntermediateDataWriter
+
+# Import for transform command
+from write_best_hundreds import WriteBestHundreds
+from write_rewards import WriteRewards
+
+# Import for stats comand
+from processors.films_processor import FilmsProcessor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-SCRAPPED_FILE = 'scrapped_data.txt'
-TABLE_FORMAT_FILE = 'data.csv'
-
-from processors.films_processor import FilmsProcessor
-
-def gather_process():
-    logger.info("gather")
-    storage = FileStorage(SCRAPPED_FILE)
-
-    # You can also pass a storage
-    scrapper = Scrapper()
-    scrapper.scrap_process(storage)
-
+# Two parameters allow to pass url of the films collection on kinopoisk and write file name
+def gather_process(url, write_file_name):
+    scrapper = KinopoiskScrapper(url)
+    films_list = scrapper.perform()
+    file_writer = IntermediateDataWriter(write_file_name, url, scrapper.collection_name, films_list)
+    file_writer.perform()
 
 def convert_data_to_table_format():
-    logger.info("transform")
-
-    # Your code here
-    # transform gathered data from txt file to pandas DataFrame and save as csv
-    pass
-
+    WriteRewards().perform()
+    WriteBestHundreds().perform()
 
 def stats_of_data():
-    logger.info("stats")
-
-    # Your code here
-    # Load pandas DataFrame and print to stdout different statistics about the data.
-    # Try to think about the data and use not only describe and info.
-    # Ask yourself what would you like to know about this data (most frequent word, or something else)
+    processor = FilmsProcessor()
+    processor.perform()
 
 
 if __name__ == '__main__':
@@ -173,14 +166,12 @@ if __name__ == '__main__':
     logger.info("Work started")
 
     if sys.argv[1] == 'gather':
-        gather_process()
+        gather_process(sys.argv[2], sys.argv[3])
 
     elif sys.argv[1] == 'transform':
         convert_data_to_table_format()
 
     elif sys.argv[1] == 'stats':
-        p = FilmsProcessor()
-        p.perform()
         stats_of_data()
 
     logger.info("work ended")
