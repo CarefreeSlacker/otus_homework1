@@ -1,6 +1,9 @@
 ## Scrapping данных с веб страницы
 
 Первая ДР для курса DataScience от OTUS.
+В файле data_sources.md список истоников данных.
+В exercises.ipynb - решённые задания по python и numpy
+в корне проекта должен лежать скачанный файл `en.openfoodfacts.org.products.tsv` иначе некоторые примеры в exercises.ipynb не запустятся.
 
 ## Для проверяющего
 
